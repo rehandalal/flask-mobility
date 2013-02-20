@@ -1,4 +1,4 @@
-flask-mobility
+Flask-Mobility
 ==============
 
-A flask extension to simplify building mobile-friendly sites.
+A Flask extension to simplify building mobile-friendly sites.
