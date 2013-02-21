@@ -11,7 +11,7 @@ setup(
     author='Rehan Dalal',
     author_email='rehan@meet-rehan.com',
     description='A Flask extension to simplify building mobile-friendly sites.',
-    long_description=open(os.path.join(ROOT, 'README.md')).read(),
+    long_description=open(os.path.join(ROOT, 'README.rst')).read(),
     py_modules=['flask_mobility'],
     zip_safe=False,
     include_package_data=True,
