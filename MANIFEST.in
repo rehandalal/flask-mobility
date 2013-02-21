@@ -1,3 +1,5 @@
 include CONTRIBUTORS
 include LICENSE
 include README.md
+prune example.py
+prune templates
