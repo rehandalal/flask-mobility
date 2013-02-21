@@ -1,5 +1,5 @@
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
 
@@ -16,7 +16,10 @@ setup(
     zip_safe=False,
     include_package_data=True,
     platforms='any',
-    install_requires=['Flask'],
+    install_requires=[
+        'setuptools',
+        'Flask'
+    ],
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
