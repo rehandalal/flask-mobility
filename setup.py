@@ -32,7 +32,6 @@ setup(
     include_package_data=True,
     platforms='any',
     install_requires=[
-        'setuptools',
         'Flask'
     ],
     classifiers=[
