@@ -1,16 +1,23 @@
-.. Flask-Mobility documentation master file, created by
-   sphinx-quickstart on Sat Feb 23 14:23:03 2013.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+================
+ Flask-Mobility
+================
 
-Welcome to Flask-Mobility's documentation!
-==========================================
+Summary
+=======
 
-Contents:
+A Flask extension to simplify building mobile-friendly sites.
+
+
+Table of contents
+=================
 
 .. toctree::
    :maxdepth: 2
 
+   changelog
+   readme
+   example
+   contributors
 
 
 Indices and tables
