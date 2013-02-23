@@ -1,16 +1,16 @@
 import functools
 import re
+
 from flask import _request_ctx_stack as stack
 
-class Mobility(object):
 
+class Mobility(object):
     def __init__(self, app=None):
         if app is not None:
             self.app = app
             self.init_app(app)
         else:
             self.app = None
-
 
     def init_app(self, app):
         app.config.setdefault('MOBILE_USER_AGENTS',
@@ -24,7 +24,6 @@ class Mobility(object):
             ctx = stack.top
             if ctx is not None and hasattr(ctx, 'request'):
                 self.process_request(ctx.request)
-
 
     def process_request(self, request):
         ua = request.user_agent.string.lower()
@@ -42,15 +41,19 @@ def mobile_template(template):
     """
     Mark a function as mobile-ready and pass a mobile template if MOBILE.
 
-    @mobile_template('a/{mobile/}b.html')
-    def view(template=None):
-    ...
+    For example::
 
-    if request.MOBILE=True the template will be 'a/mobile/b.html'.
-    if request.MOBILE=False the template will be 'a/b.html'.
+        @mobile_template('a/{mobile/}b.html')
+        def view(template=None):
+            ...
+
+
+    if ``request.MOBILE=True`` the template will be `a/mobile/b.html`.
+    if ``request.MOBILE=False`` the template will be `a/b.html`.
 
     This function is useful if the mobile view uses the same context but a
     different template.
+
     """
     def decorator(f):
         @functools.wraps(f)
@@ -69,16 +72,23 @@ def mobilized(normal_fn):
     """
     Replace a view function with a normal and mobile view.
 
-    def view(request):
-    ...
+    For example, change this::
 
-    @mobilized(view)
-    def view(request):
-    ...
+        def view(request):
+            ...
+
+
+    to this::
+
+        @mobilized(view)
+        def view(request):
+            ...
+
 
     The second function is the mobile version of view. The original
     function is overwritten, and the decorator will choose the correct
-    function based on request.MOBILE.
+    function based on ``request.MOBILE``.
+
     """
     def decorator(mobile_fn):
         @functools.wraps(mobile_fn)
