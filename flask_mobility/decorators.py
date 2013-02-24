@@ -40,16 +40,13 @@ def mobilized(normal_fn):
     """
     Replace a view function with a normal and mobile view.
 
-    For example, change this::
+    For example::
 
-        def view(request):
+        def view():
             ...
 
-
-    to this::
-
         @mobilized(view)
-        def view(request):
+        def view():
             ...
 
 
