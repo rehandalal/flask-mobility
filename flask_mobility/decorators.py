@@ -1,4 +1,5 @@
 import functools
+import re
 
 from flask import _request_ctx_stack as stack
 
@@ -27,8 +28,9 @@ def mobile_template(template):
             ctx = stack.top
             if ctx is not None and hasattr(ctx, 'request'):
                 request = ctx.request
-                fmt = {'mobile/': 'mobile/' if request.MOBILE else ''}
-                kwargs['template'] = template.format(**fmt)
+                kwargs['template'] = re.sub(r'{(.+?)}',
+                                            r'\1' if request.MOBILE else '',
+                                            template)
             return f(*args, **kwargs)
         return wrapper
     return decorator
@@ -38,16 +40,13 @@ def mobilized(normal_fn):
     """
     Replace a view function with a normal and mobile view.
 
-    For example, change this::
+    For example::
 
-        def view(request):
+        def view():
             ...
 
-
-    to this::
-
         @mobilized(view)
-        def view(request):
+        def view():
             ...
 
 

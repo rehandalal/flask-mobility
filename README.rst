@@ -62,6 +62,8 @@ mobile_template
 This decorator is used to pass an alternate template name to a view
 function for mobile requests::
 
+    from flask.ext.mobility.decorators import mobile_template
+
     @mobile_template('dir/{mobile/}template.html')
     def view(template):
         ...
@@ -78,6 +80,8 @@ mobilized
 
 This decorator is used to specify an alternate mobilized view function
 for a view::
+
+    from flask.ext.mobility.decorators import mobilized
 
     def view():
         ...
