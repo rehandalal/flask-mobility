@@ -7,12 +7,12 @@ from flask import _request_ctx_stack as stack
 class Mobility(object):
     def __init__(self, app=None):
         if app is not None:
-            self.app = app
             self.init_app(app)
         else:
             self.app = None
 
     def init_app(self, app):
+        self.app = app
         app.config.setdefault('MOBILE_USER_AGENTS',
             'android|fennec|iemobile|iphone|opera (?:mini|mobi)')
         app.config.setdefault('MOBILE_COOKIE', 'mobile')
