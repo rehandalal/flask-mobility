@@ -34,6 +34,7 @@ setup(
     install_requires=[
         'Flask'
     ],
+    test_suite='flask_mobility.tests.suite',
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
