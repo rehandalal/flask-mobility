@@ -4,6 +4,7 @@ Flask-Mobility
 
 A Flask extension to simplify building mobile-friendly sites.
 
+.. image:: https://api.travis-ci.org/rehandalal/flask-mobility.png
 
 What does this do?
 ==================
