@@ -13,7 +13,7 @@ class Mobility(object):
     def init_app(self, app):
         self.app = app
         app.config.setdefault('MOBILE_USER_AGENTS',
-            'android|fennec|iemobile|iphone|opera (?:mini|mobi)')
+            'android|fennec|iemobile|iphone|opera (?:mini|mobi)|mobile')
         app.config.setdefault('MOBILE_COOKIE', 'mobile')
 
         self.USER_AGENTS = re.compile(app.config.get('MOBILE_USER_AGENTS'))
