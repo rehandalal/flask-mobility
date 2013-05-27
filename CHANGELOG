@@ -1,7 +1,13 @@
 What's new in Flask-Mobility
 ============================
 
-Version 0.1: In development
+Version 0.1:
 ---------------------------
 
 * first release
+
+Version 0.1.1:
+---------------------------
+
+* Minor fixes
+* Add Firefox OS detection
