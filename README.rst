@@ -8,7 +8,8 @@ modifies the ``request`` object accordingly.
 
 Decorators are provided to make mobilizing views easier.
 
-`|travisimage|`_
+.. image:: https://api.travis-ci.org/rehandalal/flask-mobility.png
+   :target: https://travis-ci.org/rehandalal/flask-mobility/
 
 
 Documentation
@@ -46,6 +47,3 @@ Test
 To run tests from a tarball or git clone::
 
     $ python setup.py test
-
-.. _|travisimage|: https://travis-ci.org/rehandalal/flask-mobility/
-.. |travisimage| image:: https://api.travis-ci.org/rehandalal/flask-mobility.png
