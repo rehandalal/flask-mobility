@@ -28,8 +28,9 @@ def mobile_template(template):
             ctx = stack.top
             if ctx is not None and hasattr(ctx, 'request'):
                 request = ctx.request
+                is_mobile = getattr(request, 'MOBILE', None)
                 kwargs['template'] = re.sub(r'{(.+?)}',
-                                            r'\1' if request.MOBILE else '',
+                                            r'\1' if is_mobile else '',
                                             template)
             return f(*args, **kwargs)
         return wrapper
