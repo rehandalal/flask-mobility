@@ -2,7 +2,12 @@ include CHANGELOG
 include CONTRIBUTORS
 include LICENSE
 include README.rst
-recursive-include docs *
-recursive-exclude docs *.pyc
-recursive-exclude docs *.pyo
-prune docs/_build
+include .travis.yml
+include requirements.txt
+
+recursive-include flask_mobility/tests *.py
+
+recursive-include docs Makefile *.rst *.py *.less
+recursive-include docs/_themes *
+recursive-include docs/_static *
+recursive-include docs/example *
