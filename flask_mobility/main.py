@@ -28,7 +28,7 @@ class Mobility(object):
         ua = request.user_agent.string.lower()
         mc = request.cookies.get(self.app.config.get('MOBILE_COOKIE'))
 
-        if (self.USER_AGENTS.search(ua) and mc != 'off') or mc == 'on':
+        if mc == 'on' or (mc != 'off' and self.USER_AGENTS.search(ua)):
             request.MOBILE = True
         else:
             request.MOBILE = False
