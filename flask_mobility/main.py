@@ -28,5 +28,5 @@ class Mobility(object):
         ua = request.user_agent.string.lower()
         mc = request.cookies.get(self.app.config.get('MOBILE_COOKIE'))
 
-        request.MOBILE = \
-            mc == 'on' or (mc != 'off' and self.USER_AGENTS.search(ua))
+        request.MOBILE = (mc == 'on' or 
+            (mc != 'off' and self.USER_AGENTS.search(ua))
