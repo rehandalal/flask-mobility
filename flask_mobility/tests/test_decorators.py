@@ -26,26 +26,48 @@ class DecoratorsTestCase(unittest.TestCase):
         def mobilize():
             return render_template_string('True')
 
-        self.app = app.test_client()
+        self.app = app
+        self.client = app.test_client()
 
-    def test_mobile_template(self):
+    def test_mobile_template_user_agent(self):
         """Test the mobile_template decorator"""
 
         # Check without mobile User-Agent header
-        assert b'template.html' == self.app.get('/').data
+        assert b'template.html' == self.client.get('/').data
 
         # Check with mobile User-Agent header
         headers = [('User-Agent', 'android')]
-        response = self.app.get('/', headers=headers)
+        response = self.client.get('/', headers=headers)
         assert b'mobile/template.html' == response.data
 
-    def test_mobilized(self):
+    def test_mobile_template_cookie(self):
+        assert b'template.html' == self.client.get('/').data
+
+        MOBILE_COOKIE = self.app.config.get('MOBILE_COOKIE')
+
+        self.client.set_cookie('localhost', MOBILE_COOKIE, 'on')
+        assert b'mobile/template.html' == self.client.get('/').data
+
+        self.client.set_cookie('localhost', MOBILE_COOKIE, 'off')
+        assert b'template.html' == self.client.get('/').data
+
+    def test_mobilized_user_agent(self):
         """Test the mobilized decorator"""
 
         # Check without mobile User-Agent header
-        print(self.app.get('/mobilize').data)
-        assert b'False' == self.app.get('/mobilize').data
+        assert b'False' == self.client.get('/mobilize').data
 
         # Check with mobile User-Agent header
         headers = [('User-Agent', 'android')]
-        assert b'True' == self.app.get('/mobilize', headers=headers).data
+        assert b'True' == self.client.get('/mobilize', headers=headers).data
+
+    def test_mobilized_cookie(self):
+        assert b'False' == self.client.get('/mobilize').data
+
+        MOBILE_COOKIE = self.app.config.get('MOBILE_COOKIE')
+
+        self.client.set_cookie('localhost', MOBILE_COOKIE, 'on')
+        assert b'True' == self.client.get('/mobilize').data
+
+        self.client.set_cookie('localhost', MOBILE_COOKIE, 'off')
+        assert b'False' == self.client.get('/mobilize').data
