@@ -32,19 +32,20 @@ class DecoratorsTestCase(unittest.TestCase):
         """Test the mobile_template decorator"""
 
         # Check without mobile User-Agent header
-        assert 'template.html' == self.app.get('/').data
+        assert b'template.html' == self.app.get('/').data
 
         # Check with mobile User-Agent header
         headers = [('User-Agent', 'android')]
         response = self.app.get('/', headers=headers)
-        assert 'mobile/template.html' == response.data
+        assert b'mobile/template.html' == response.data
 
     def test_mobilized(self):
         """Test the mobilized decorator"""
 
         # Check without mobile User-Agent header
-        assert 'False' in self.app.get('/mobilize').data
+        print(self.app.get('/mobilize').data)
+        assert b'False' == self.app.get('/mobilize').data
 
         # Check with mobile User-Agent header
         headers = [('User-Agent', 'android')]
-        assert 'True' in self.app.get('/mobilize', headers=headers).data
+        assert b'True' == self.app.get('/mobilize', headers=headers).data

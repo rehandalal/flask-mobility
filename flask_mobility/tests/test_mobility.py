@@ -22,11 +22,11 @@ class MobilityTestCase(unittest.TestCase):
         """Check that mobile user agents are properly detected"""
 
         # Check without mobile User-Agent header
-        assert 'False' in self.app.get('/').data
+        assert b'False' == self.app.get('/').data
 
         # Check with mobile User-Agent header
         headers = [('User-Agent', 'android')]
-        assert 'True' in self.app.get('/', headers=headers).data
+        assert b'True' == self.app.get('/', headers=headers).data
 
     def test_mobile_cookie(self):
         """Check that the mobile cookie value is respected"""
@@ -34,9 +34,9 @@ class MobilityTestCase(unittest.TestCase):
 
         # Check cookie is set to 'on'
         self.app.set_cookie('localhost', MOBILE_COOKIE, 'on')
-        assert 'True' in self.app.get('/').data
+        assert b'True' == self.app.get('/').data
 
         # Check cookie is set to 'off'
         self.app.set_cookie('localhost', MOBILE_COOKIE, 'off')
         headers = [('User-Agent', 'android')]
-        assert 'False' in self.app.get('/', headers=headers).data
+        assert b'False' == self.app.get('/', headers=headers).data
