@@ -36,7 +36,8 @@ class DecoratorsTestCase(unittest.TestCase):
 
         # Check with mobile User-Agent header
         headers = [('User-Agent', 'android')]
-        assert 'mobile/template.html' == self.app.get('/', headers=headers).data
+        response = self.app.get('/', headers=headers)
+        assert 'mobile/template.html' == response.data
 
     def test_mobilized(self):
         """Test the mobilized decorator"""

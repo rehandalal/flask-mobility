@@ -12,7 +12,8 @@ class Mobility(object):
 
     def init_app(self, app):
         self.app = app
-        app.config.setdefault('MOBILE_USER_AGENTS',
+        app.config.setdefault(
+            'MOBILE_USER_AGENTS',
             'android|fennec|iemobile|iphone|opera (?:mini|mobi)|mobile')
         app.config.setdefault('MOBILE_COOKIE', 'mobile')
 
@@ -28,5 +29,5 @@ class Mobility(object):
         ua = request.user_agent.string.lower()
         mc = request.cookies.get(self.app.config.get('MOBILE_COOKIE'))
 
-        request.MOBILE = (mc == 'on' or 
-            (mc != 'off' and self.USER_AGENTS.search(ua))
+        request.MOBILE = (mc == 'on' or
+                          (mc != 'off' and self.USER_AGENTS.search(ua)))
