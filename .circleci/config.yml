@@ -1,0 +1,148 @@
+version: 2.1
+orbs:
+      codecov: codecov/codecov@1.0.2
+jobs:
+  lint:
+    docker:
+      - image: circleci/python:3.7
+
+    steps:
+      - checkout
+
+      - run:
+          name: Create virtualenv
+          command: |
+            mkdir -p ~/.venv
+            virtualenv ~/.venv
+            echo "source ~/.venv/bin/activate" >> $BASH_ENV
+
+      - run:
+          name: Install dependencies
+          command: |
+            pip install -r requirements-lint.txt
+            pip install therapist
+
+      - run:
+          name: Lint
+          command: therapist run --use-tracked-files
+  test: &test-defaults
+    docker:
+      - image: circleci/python:3.7
+
+    steps:
+      - checkout
+
+      - run:
+          name: Create virtualenv
+          command: |
+            mkdir -p ~/.venv
+            virtualenv ~/.venv
+            echo "source ~/.venv/bin/activate" >> $BASH_ENV
+
+      - run:
+          name: Install dependencies
+          command: |
+            pip install -r requirements-dev.txt
+            pip install pytest
+            pip install .
+
+      - run:
+          name: Test
+          command: pytest -vvv --cov-report=xml --cov
+
+      - codecov/upload:
+          file: coverage.xml
+
+  test-py35:
+    <<: *test-defaults
+    docker:
+      - image: circleci/python:3.5
+
+  test-py36:
+    <<: *test-defaults
+    docker:
+      - image: circleci/python:3.6
+
+  test-py37:
+    <<: *test-defaults
+    docker:
+      - image: circleci/python:3.7
+
+  deploy:
+    docker:
+      - image: circleci/python:3.7
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: v1-python-{{ .Environment.CIRCLE_JOB }}
+
+      - run:
+          name: Create virtualenv
+          command: |
+            mkdir -p ~/.venv
+            virtualenv ~/.venv
+            echo "source ~/.venv/bin/activate" >> $BASH_ENV
+
+      - run:
+          name: Install dependencies
+          command: pip install twine
+
+      - save_cache:
+          paths:
+            - "~/.venv"
+          key: v1-python-{{ .Environment.CIRCLE_JOB }}
+
+      - run:
+          name: Verify git tag matches version
+          command: python setup.py verify
+
+      - run:
+          name: Create .pypirc
+          command: |
+            echo -e "[pypi]" >> ~/.pypirc
+            echo -e "username = rehandalal" >> ~/.pypirc
+            echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
+
+      - run:
+          name: Create distributions
+          command: |
+            python setup.py sdist
+            python setup.py bdist_wheel
+
+      - run:
+          name: Upload to PyPI
+          command: twine upload dist/*
+
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - lint:
+          filters:
+            tags:
+              only: /^v.*/
+      - test-py35:
+          filters:
+            tags:
+              only: /^v.*/
+      - test-py36:
+          filters:
+            tags:
+              only: /^v.*/
+      - test-py37:
+          filters:
+            tags:
+              only: /^v.*/
+      - deploy:
+          requires:
+            - lint
+            - test-py35
+            - test-py36
+            - test-py37
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/

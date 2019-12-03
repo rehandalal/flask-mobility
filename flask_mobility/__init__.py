@@ -1,6 +1,8 @@
-from flask_mobility._version import __releasedate__, __version__
 from flask_mobility import decorators
-from flask_mobility.main import Mobility
+from flask_mobility.mobility import Mobility
 
 
-__all__ = ['Mobility', 'decorators']
+VERSION = (0, 2, 0)
+
+__version__ = ".".join(str(v) for v in VERSION)
+__all__ = ["Mobility", "decorators"]

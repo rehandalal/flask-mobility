@@ -1,3 +1,0 @@
--r requirements.txt
-
-user-agents==0.3.0
