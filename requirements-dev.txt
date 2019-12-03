@@ -1,3 +1,4 @@
-- r requirements.txt
+-r requirements.txt
+Jinja2==2.10.3
 pytest==5.3.1
 pytest-cov==2.8.1
