@@ -8,10 +8,9 @@ class Mobility(object):
         self.app = app
 
         if self.app is not None:
-            self.init_app(self.app)
+            self.init_app(app)
 
     def init_app(self, app):
-        self.app = app
         app.config.setdefault("MOBILE_USER_AGENTS", "android|fennec|iemobile|iphone|opera (?:mini|mobi)|mobile")
         app.config.setdefault("MOBILE_COOKIE", "mobile")
 
@@ -21,10 +20,10 @@ class Mobility(object):
         def before_request():
             ctx = stack.top
             if ctx is not None and hasattr(ctx, "request"):
-                self.process_request(ctx.request)
+                self.process_request(ctx.request, app)
 
-    def process_request(self, request):
+    def process_request(self, request, app):
         ua = request.user_agent.string.lower()
-        mc = request.cookies.get(self.app.config.get("MOBILE_COOKIE"))
+        mc = request.cookies.get(app.config.get("MOBILE_COOKIE"))
 
         request.MOBILE = mc == "on" or (mc != "off" and self.USER_AGENTS.search(ua))
