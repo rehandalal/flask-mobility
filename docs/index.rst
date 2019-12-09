@@ -120,7 +120,4 @@ Example
    :linenos:
 
 
-.. include:: ../CHANGELOG
-
-
 .. include:: ../CONTRIBUTORS
