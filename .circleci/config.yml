@@ -4,7 +4,7 @@ orbs:
 jobs:
   lint:
     docker:
-      - image: circleci/python:3.7
+      - image: circleci/python:3.8
 
     steps:
       - checkout
@@ -27,7 +27,7 @@ jobs:
           command: therapist run --use-tracked-files
   test: &test-defaults
     docker:
-      - image: circleci/python:3.7
+      - image: circleci/python:3.8
 
     steps:
       - checkout
@@ -68,9 +68,14 @@ jobs:
     docker:
       - image: circleci/python:3.7
 
+  test-py38:
+    <<: *test-defaults
+    docker:
+      - image: circleci/python:3.8
+
   deploy:
     docker:
-      - image: circleci/python:3.7
+      - image: circleci/python:3.8
 
     steps:
       - checkout
@@ -137,12 +142,17 @@ workflows:
           filters:
             tags:
               only: /^v.*/
+      - test-py38:
+          filters:
+            tags:
+              only: /^v.*/
       - deploy:
           requires:
             - lint
             - test-py35
             - test-py36
             - test-py37
+            - test-py38
           filters:
             branches:
               ignore: /.*/
