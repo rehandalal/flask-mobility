@@ -1,6 +1,6 @@
 import pytest
 
-from flask import Flask, render_template_string
+from flask import Flask, render_template_string, request
 from flask_mobility import Mobility
 
 
@@ -12,11 +12,11 @@ class MobilityTestCase(object):
 
         @app.route("/")
         def index():
+            assert isinstance(request.MOBILE, bool)
             tpl = "{% if request.MOBILE %}True{% else %}False{% endif %}"
             return render_template_string(tpl)
 
         return app
-        self.config = app.config
 
     def test_detect_mobile_user_agent(self, app):
         """Check that mobile user agents are properly detected"""
