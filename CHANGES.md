@@ -13,3 +13,8 @@
 
 - Stable release tested against new Flask releases
 - Dropped official support for Python < 3.5
+
+### v1.1.0
+
+- Fixed issue where `request.MOBILE` may or may not be a boolean.
+- Added official support for Python 3.8
