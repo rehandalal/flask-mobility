@@ -18,3 +18,8 @@
 
 - Fixed issue where `request.MOBILE` may or may not be a boolean.
 - Added official support for Python 3.8
+
+### v2.0.0
+
+- Added support for Flask 3.0.0
+- Transitioned from `request.MOBILE` to `g.is_mobile`
