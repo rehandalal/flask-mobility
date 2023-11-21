@@ -1,6 +1,6 @@
 import pytest
 
-from flask import Flask, render_template_string, request
+from flask import Flask, render_template_string, g
 from flask_mobility import Mobility
 
 
@@ -12,8 +12,8 @@ class MobilityTestCase(object):
 
         @app.route("/")
         def index():
-            assert isinstance(request.MOBILE, bool)
-            tpl = "{% if request.MOBILE %}True{% else %}False{% endif %}"
+            assert isinstance(g.is_mobile, bool)
+            tpl = "{% if g.is_mobile %}True{% else %}False{% endif %}"
             return render_template_string(tpl)
 
         return app

@@ -3,7 +3,7 @@
 {% block content %}
   <p>Template: <strong>index.html</strong></p>
   <p>
-    request.MOBILE:
-    <strong>{% if request.MOBILE %}True{% else %}False{% endif %}</strong>
+    g.is_mobile:
+    <strong>{% if g.is_mobile %}True{% else %}False{% endif %}</strong>
   </p>
 {% endblock %}
