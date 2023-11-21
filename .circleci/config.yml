@@ -4,22 +4,16 @@ orbs:
 jobs:
   lint:
     docker:
-      - image: circleci/python:3.8
+      - image: cimg/python:3.12
 
     steps:
       - checkout
 
       - run:
-          name: Create virtualenv
-          command: |
-            mkdir -p ~/.venv
-            virtualenv ~/.venv
-            echo "source ~/.venv/bin/activate" >> $BASH_ENV
-
-      - run:
           name: Install dependencies
           command: |
             pip install -r requirements-lint.txt
+            pip install setuptools
             pip install therapist
 
       - run:
@@ -27,17 +21,10 @@ jobs:
           command: therapist run --use-tracked-files
   test: &test-defaults
     docker:
-      - image: circleci/python:3.8
+      - image: cimg/python:3.12
 
     steps:
       - checkout
-
-      - run:
-          name: Create virtualenv
-          command: |
-            mkdir -p ~/.venv
-            virtualenv ~/.venv
-            echo "source ~/.venv/bin/activate" >> $BASH_ENV
 
       - run:
           name: Install dependencies
@@ -53,53 +40,43 @@ jobs:
       - codecov/upload:
           file: coverage.xml
 
-  test-py35:
+  test-py3-8:
     <<: *test-defaults
     docker:
-      - image: circleci/python:3.5
+      - image: cimg/python:3.8
 
-  test-py36:
+  test-py3-9:
     <<: *test-defaults
     docker:
-      - image: circleci/python:3.6
+      - image: cimg/python:3.9
 
-  test-py37:
+  test-py3-10:
     <<: *test-defaults
     docker:
-      - image: circleci/python:3.7
+      - image: cimg/python:3.10
 
-  test-py38:
+  test-py3-11:
     <<: *test-defaults
     docker:
-      - image: circleci/python:3.8
+      - image: cimg/python:3.11
+
+  test-py3-12:
+    <<: *test-defaults
+    docker:
+      - image: cimg/python:3.12
 
   deploy:
     docker:
-      - image: circleci/python:3.8
+      - image: cimg/python:3.12
 
     steps:
       - checkout
-
-      - restore_cache:
-          key: v1-python-{{ .Environment.CIRCLE_JOB }}
-
-      - run:
-          name: Create virtualenv
-          command: |
-            mkdir -p ~/.venv
-            virtualenv ~/.venv
-            echo "source ~/.venv/bin/activate" >> $BASH_ENV
 
       - run:
           name: Install dependencies
           command: |
             pip install -r requirements.txt
             pip install twine
-
-      - save_cache:
-          paths:
-            - "~/.venv"
-          key: v1-python-{{ .Environment.CIRCLE_JOB }}
 
       - run:
           name: Verify git tag matches version
@@ -130,29 +107,34 @@ workflows:
           filters:
             tags:
               only: /^v.*/
-      - test-py35:
+      - test-py3-8:
           filters:
             tags:
               only: /^v.*/
-      - test-py36:
+      - test-py3-9:
           filters:
             tags:
               only: /^v.*/
-      - test-py37:
+      - test-py3-10:
           filters:
             tags:
               only: /^v.*/
-      - test-py38:
+      - test-py3-11:
+          filters:
+            tags:
+              only: /^v.*/
+      - test-py3-12:
           filters:
             tags:
               only: /^v.*/
       - deploy:
           requires:
             - lint
-            - test-py35
-            - test-py36
-            - test-py37
-            - test-py38
+            - test-py3-8
+            - test-py3-9
+            - test-py3-10
+            - test-py3-11
+            - test-py3-12
           filters:
             branches:
               ignore: /.*/
