@@ -22,7 +22,7 @@
 ### v2.0.0
 
 - Added support for Flask 3.0.0
-- Transitioned from `request.MOBILE` to `g.is_mobile`
+- **BREAKING CHANGE:** Transitioned from `request.MOBILE` to `g.is_mobile`
 
 ### v2.0.1
 
