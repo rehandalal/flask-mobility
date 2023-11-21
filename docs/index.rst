@@ -28,17 +28,17 @@ application:
     Defaults to: ``'mobile'``
 
 
-Changes to the ``request`` Object
-=================================
+Changes to the global ``g`` Object
+==================================
 
-If the current request is for the mobile site, ``request.MOBILE =
-True``. At all other times ``request.MOBILE = False``.
+If the current request is for the mobile site, ``g.is_mobile ==
+True``. At all other times ``g.is_mobile == False``.
 
 
-How is the value of ``request.MOBILE`` determined?
-==================================================
+How is the value of ``g.is_mobile`` determined?
+===============================================
 
-``request.MOBILE`` will be set to ``True`` if one of the following
+``g.is_mobile`` will be set to ``True`` if one of the following
 cases are satisfied:
 
 1. The user agent string in the request headers matches
@@ -64,7 +64,7 @@ function for mobile requests::
 
 
 This will pass through ``'dir/mobile/template.html'`` as ``template``
-where ``request.MOBILE`` is set to ``True``. When ``request.MOBILE``
+where ``g.is_mobile`` is set to ``True``. When ``g.is_mobile``
 is ``False`` it will pass through ``'dir/template.html'`` as
 ``template``.
 
