@@ -47,7 +47,7 @@ copyright = u'2013, Rehan Dalal'
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
-fm_init_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../flask_mobility/__init__.py')
+fm_init_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../flask_mobility/__init__.py'))
 spec = importlib.util.spec_from_file_location("flask_mobility", fm_init_path)
 module = importlib.util.module_from_spec(spec)
 sys.modules["flask_mobility"] = module
