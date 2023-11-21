@@ -23,3 +23,7 @@
 
 - Added support for Flask 3.0.0
 - Transitioned from `request.MOBILE` to `g.is_mobile`
+
+### v2.0.1
+
+- Fix documentation and Python version support info
