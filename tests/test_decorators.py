@@ -47,10 +47,10 @@ class TestDecorators(object):
 
         MOBILE_COOKIE = app.config.get("MOBILE_COOKIE")
 
-        client.set_cookie("localhost", MOBILE_COOKIE, "on")
+        client.set_cookie(MOBILE_COOKIE, value="on")
         assert b"mobile/template.html" == client.get("/").data
 
-        client.set_cookie("localhost", MOBILE_COOKIE, "off")
+        client.set_cookie(MOBILE_COOKIE, value="off")
         assert b"template.html" == client.get("/").data
 
     def test_mobilized_user_agent(self, app):
@@ -71,8 +71,8 @@ class TestDecorators(object):
 
         MOBILE_COOKIE = app.config.get("MOBILE_COOKIE")
 
-        client.set_cookie("localhost", MOBILE_COOKIE, "on")
+        client.set_cookie(MOBILE_COOKIE, value="on")
         assert b"True" == client.get("/mobilize").data
 
-        client.set_cookie("localhost", MOBILE_COOKIE, "off")
+        client.set_cookie(MOBILE_COOKIE, value="off")
         assert b"False" == client.get("/mobilize").data

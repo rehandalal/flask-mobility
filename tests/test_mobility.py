@@ -36,10 +36,10 @@ class MobilityTestCase(object):
         MOBILE_COOKIE = app.config.get("MOBILE_COOKIE")
 
         # Check cookie is set to 'on'
-        client.set_cookie("localhost", MOBILE_COOKIE, "on")
+        client.set_cookie(MOBILE_COOKIE, value="on")
         assert b"True" == client.get("/").data
 
         # Check cookie is set to 'off'
-        client.set_cookie("localhost", MOBILE_COOKIE, "off")
+        client.set_cookie(MOBILE_COOKIE, value="off")
         headers = [("User-Agent", "android")]
         assert b"False" == client.get("/", headers=headers).data

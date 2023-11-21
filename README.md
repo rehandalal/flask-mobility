@@ -9,7 +9,7 @@ A Flask extension to simplify building mobile-friendly sites.
 [![Documentation](https://img.shields.io/readthedocs/flask-mobility/latest.svg)](http://flask-mobility.readthedocs.io/en/latest/?badge=latest)
 
 This extension detects whether a mobile site is requested and it
-modifies the `request` object accordingly.
+modifies the Flask global `g` object accordingly.
 
 Decorators are provided to make mobilizing views easier.
 
